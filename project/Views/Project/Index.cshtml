@@ -1,0 +1,70 @@
+﻿@model System.Collections.Generic.List<lab1.Models.Project>
+
+@{
+    ViewData["Title"] = "Projects";
+
+    int employeeId = (int) ViewData["employeeId"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+</div>
+
+
+@if(Model is not null && Model.Count > 0)
+{
+
+    <div class="container p-3">  
+        <table class="table table-bordered table-striped" stype="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Active</th>
+                    <th>Description</th>
+                    <th>Budget</th> 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Project project in Model)
+                {
+
+                    <tr>
+                        <td width="25%">@project.name</td>
+                        <td width="5%">@project.active</td>
+                        <td width="38%">@project.description</td>
+                        <td width="5%">@project.timeBudget</td>
+
+                        <td witdh="15%">
+                            <div>
+                                <a style="margin-left: 5px" type="button" asp-action="InspectView" class="btn btn-warning" asp-route-id=@project.id>Inspect</a>
+
+                                @if (project.active)
+                                {
+                                    <form method="get" style="display: inline-block" asp-controller="Activity" asp-action="Create">
+                                        <input hidden type="text" name="id" value=@project.id>
+                                        <input type="submit" value="Add" style="margin-left: 5px" class="btn btn-info">
+                                    </form>
+
+                                    @if (project.ownerId == employeeId)
+                                    {
+                                        <a style="margin-left: 5px" type="button" asp-action="EditView" class="btn btn-success" asp-route-id=@project.id>Edit</a>
+                                    }
+                                }                                
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}else{
+    <p>No data</p>
+}
+<div class="row col-8 offset-2">
+    <div class="col">
+        <a asp-action="Index" asp-controller="Activity" class="btn btn-info w-100">Back to Activities</a>
+    </div>
+    <div class="col">
+        <a asp-action="Create" class="btn btn-info w-100">Add new Project</a>
+    </div>
+</div>

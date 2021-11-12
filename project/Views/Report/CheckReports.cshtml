@@ -1,0 +1,57 @@
+@model List<Tuple<bool, string>>
+
+@{
+    
+}
+
+@if(Model is not null && Model.Count() > 0)
+{
+
+    <div class="container p-3">  
+        <table class="table table-bordered table-striped" stype="width:100%">
+            <thead>
+                <tr>
+                    <th>Frozen</th>
+                    <th>Month</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int index = 0; index < Model.Count; index++){
+
+                    <tr>
+                        <td>@Model[index].Item1</td>
+                        <td>@Model[index].Item2</td>
+                        <td width="20%" style="align-content: center">
+                            <a 
+                                asp-action="InspectMonth"
+                                asp-route-report="@Model[index].Item2"
+                                class="btn btn-info" 
+                                style="margin-left: 10px">
+                                Inspect
+                            </a>
+                            <form method="post" asp-action="Freeze" style="display:inline-block">
+                                <button
+                                    type="submit"
+                                    class="btn btn-info" 
+                                    style="margin-left: 10px">
+                                    Freeze
+                                </button>
+                                <input name="reportId" value="@Model[index].Item2" hidden/>
+                            </form>
+
+                        </td>
+                    </tr>        
+                }
+            </tbody>
+        </table>
+    </div>
+
+}else{
+    <p>no data</p>
+}
+
+<div class="row col-8 offset-2">
+    <div class="col">
+        <a asp-action="Index" class="btn btn-info w-100">Back</a>
+    </div>
+</div>

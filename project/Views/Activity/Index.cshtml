@@ -1,0 +1,75 @@
+﻿@model System.Collections.Generic.List<lab1.Models.Activity>
+
+@{
+    ViewData["Title"] = "Your today activities";
+    DateTime date = (DateTime) ViewData["CurrentDate"];
+    string name = (string) ViewData["userInfo"];
+}
+
+@if (date == DateTime.Today.Date){
+    <div class="text-center">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+    </div>
+}else{
+    <div class="text-center">
+        <h1 class="display-4">Your activities on @date.Day/@date.Month/@date.Year</h1>
+    </div>
+}
+<div>
+    <p>total activity time : @Model.Sum(activity => activity.durationMinutes)</p>
+    <h3>user info : @name</h3>
+</div>
+
+<a style="margin-left: 5px" asp-route-Id="-1" asp-action="Index" type="button" class="btn btn-success">Previous</a>
+<a style="margin-left: 5px" asp-route-Id="1" asp-action="Index" type="button" class="btn btn-success">Next</a>
+
+@if(Model is not null && Model.Count > 0)
+{
+
+    <div class="container p-3">  
+        <table class="table table-bordered table-striped" stype="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Active</th>
+                    <th>Description</th>
+                    <th>Duration</th> 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var activity in Model)
+                {
+
+                    <tr>
+                        <td width="25%">@activity.name</td>
+                        <td width="10%">@activity.active</td>
+                        <td width="40%">@activity.description</td>
+                        <td width="5%">@activity.durationMinutes</td>
+                        
+                        <td>
+                            @if (activity.active)
+                            {
+                                <div style="align-content: center">
+                                    <a style="margin-right: 5px; margin-left: 6px" asp-route-Id=@activity.id asp-action="DeleteView" type="button" class="btn btn-danger">Delete</a>
+                                    <a style="margin-left: 5px" asp-route-Id=@activity.id asp-action="EditView" type="button" class="btn btn-success">Edit</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <a style="margin-left: 5px" type="button" class="btn btn-info">Frozen</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+    </div>
+}else{
+    <p>No data</p>
+}
+<div class="row col-8 offset-2">
+    <div class="col">
+        <a asp-action="Index" asp-controller="Project" class="btn btn-info w-100">Back to Project</a>
+    </div>
+</div>
