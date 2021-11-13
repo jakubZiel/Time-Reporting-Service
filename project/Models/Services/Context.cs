@@ -1,11 +1,11 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
-using lab1.Models;
+using project.Models;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace lab1.Models.Services
+namespace project.Models.Services
 {   
     public interface IContext
     {

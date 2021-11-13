@@ -1,4 +1,4 @@
-namespace lab1.Models
+namespace project.Models
 {
     public class Employee : EmployeeView
     {

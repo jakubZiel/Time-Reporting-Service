@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using lab1.Models.Services;
+using project.Models.Services;
 using Microsoft.Extensions.Logging;
 
-namespace lab1.Controllers
+namespace project.Controllers
 {
     public class AdminController : BaseController
     {

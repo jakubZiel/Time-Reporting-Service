@@ -5,9 +5,38 @@
     <projectFile profileName="lab1">project/project.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96b8416d-a3c3-408d-a7b8-d18508a5375f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NTR.sln" afterDir="false" />
+    <list default="true" id="a0a3cdca-0f09-4426-9178-3edbdb17f81d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.NTR/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NTR/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.NTR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NTR/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Controllers/ActivityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Controllers/ActivityController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Controllers/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Controllers/BaseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Controllers/BaseController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Controllers/IdentityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Controllers/IdentityController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Controllers/ProjectController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Controllers/ProjectController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Controllers/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Controllers/ReportController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Models/Activity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/Activity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Models/Employee.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/Employee.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Models/ErrorViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/ErrorViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Models/Project.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/Project.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Models/Report.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/Report.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Models/Services/Context.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/Services/Context.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/Activity/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/Activity/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/Activity/DeleteView.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/Activity/DeleteView.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/Activity/EditView.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/Activity/EditView.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/Activity/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/Activity/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/Identity/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/Identity/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/Project/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/Project/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/Project/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/Project/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/Project/InspectView.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/Project/InspectView.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Views/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/project/Views/_ViewImports.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/project/project.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,19 +46,27 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="20pvyYP492aq2tflXoNKp4GtoUN" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="20pyJSQbjYAQamKayjBWqwrq782" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="azure&#10;java.sql.Driver&#10;sqlserver.jtds&#10;sqlserver" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.project: IIS Express">
+  <component name="RunManager" selected=".NET Launch Settings Profile.project: lab1">
     <configuration name="project: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/project/project.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net5.0" />
@@ -64,14 +101,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="96b8416d-a3c3-408d-a7b8-d18508a5375f" name="Changes" comment="" />
-      <created>1636754598499</created>
+      <changelist id="a0a3cdca-0f09-4426-9178-3edbdb17f81d" name="Changes" comment="" />
+      <created>1636755754442</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1636754598499</updated>
-      <workItem from="1636754600742" duration="103000" />
-      <workItem from="1636754737566" duration="202000" />
-      <workItem from="1636755029359" duration="47000" />
+      <updated>1636755754442</updated>
+      <workItem from="1636755767378" duration="1392000" />
+      <workItem from="1636757452778" duration="53000" />
+      <workItem from="1636757529339" duration="5508000" />
+      <workItem from="1636763131895" duration="61000" />
+      <workItem from="1636763240960" duration="31000" />
     </task>
     <servers />
   </component>

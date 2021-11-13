@@ -2,9 +2,9 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
-using lab1.Models.Services;
+using project.Models.Services;
 
-namespace lab1.Models
+namespace project.Models
 {
     public class Report
     {

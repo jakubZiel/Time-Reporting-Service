@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace  lab1.Models
+namespace  project.Models
 {
     public class Activity
     {   

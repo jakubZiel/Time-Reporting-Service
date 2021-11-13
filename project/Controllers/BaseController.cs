@@ -1,13 +1,13 @@
 using System.Linq;
-using lab1.Models.Services;
+using project.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
-using lab1.Models;
+using project.Models;
 
-namespace lab1.Controllers
+namespace project.Controllers
 {
     public abstract class BaseController : Controller
     {

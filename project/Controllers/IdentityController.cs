@@ -1,12 +1,12 @@
 using System;
 using System.Net;
-using lab1.Models.Services;
+using project.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using lab1.Models;
+using project.Models;
 using Microsoft.AspNetCore.Http;
 
-namespace lab1.Controllers
+namespace project.Controllers
 {   
     public class IdentityController : BaseController
     {

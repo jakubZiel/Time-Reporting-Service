@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using lab1.Models.Services;
+using project.Models.Services;
 
-namespace lab1
+namespace project
 {
     public class Startup
     {

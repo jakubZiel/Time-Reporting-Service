@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using lab1.Models.Services;
-using lab1.Models;
+using project.Models.Services;
+using project.Models;
 using Microsoft.AspNetCore.Http;
 using System.Text.RegularExpressions;
-namespace lab1.Controllers
+namespace project.Controllers
 {
     public class ReportController : BaseController
     {   
