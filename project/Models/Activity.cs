@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
 using System;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace  project.Models
 {
@@ -29,7 +27,7 @@ namespace  project.Models
 
         public Activity()
         {
-            dateCreated = System.DateTime.Now;
+            dateCreated = DateTime.Now;
         }
     }  
 }
