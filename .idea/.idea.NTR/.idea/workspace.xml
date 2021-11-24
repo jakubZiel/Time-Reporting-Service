@@ -35,6 +35,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.project: lab1">
@@ -83,7 +84,7 @@
       <workItem from="1636763131895" duration="61000" />
       <workItem from="1636763240960" duration="31000" />
       <workItem from="1636763938511" duration="305000" />
-      <workItem from="1637748690629" duration="767000" />
+      <workItem from="1637748690629" duration="1032000" />
     </task>
     <task id="LOCAL-00001" summary="project - lab1">
       <created>1636764068064</created>
