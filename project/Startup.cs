@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using project.Models.EntityFramework;
 using project.Models.Services;
 
 namespace project
@@ -37,8 +35,12 @@ namespace project
                     .AddControllersWithViews()
                     .AddRazorRuntimeCompilation();
 
-        
             services.AddSingleton<IContext, Context>();
+            
+            services.AddDbContext<TRSDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

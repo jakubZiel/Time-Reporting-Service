@@ -5,9 +5,28 @@
     <projectFile profileName="lab1">project/project.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0a3cdca-0f09-4426-9178-3edbdb17f81d" name="Changes" comment="project - lab1">
+    <list default="true" id="a0a3cdca-0f09-4426-9178-3edbdb17f81d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/project/Models/EntityFramework/Employee.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/Models/EntityFramework/Project.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/Models/EntityFramework/Report.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/Models/EntityFramework/TRSDbContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/Models/EntityFramework/Tag.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/Models/EntityFramework/Test.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/Models/EntityFramework/Test2.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/Models/EntityFramework/TestContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NTR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NTR/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/Models/Activity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/Activity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Models/EntityFramework/Activity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/EntityFramework/Activity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Models/Report.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Models/Report.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/project/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/project/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/project/project.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +55,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.project: lab1">
@@ -84,7 +104,10 @@
       <workItem from="1636763131895" duration="61000" />
       <workItem from="1636763240960" duration="31000" />
       <workItem from="1636763938511" duration="305000" />
-      <workItem from="1637748690629" duration="1032000" />
+      <workItem from="1637748690629" duration="3523000" />
+      <workItem from="1637749884604" duration="9231000" />
+      <workItem from="1637763614453" duration="1065000" />
+      <workItem from="1637764722183" duration="140000" />
     </task>
     <task id="LOCAL-00001" summary="project - lab1">
       <created>1636764068064</created>
@@ -118,5 +141,9 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="project - lab1" />
     <option name="LAST_COMMIT_MESSAGE" value="project - lab1" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

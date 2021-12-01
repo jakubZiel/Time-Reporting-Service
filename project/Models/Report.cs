@@ -8,7 +8,6 @@ namespace project.Models
 {
     public class Report
     {
-        
         public bool frozen;
         public string origin;
         public List<AcceptedRecord> accepted;
