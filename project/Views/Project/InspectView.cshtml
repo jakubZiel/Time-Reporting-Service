@@ -1,4 +1,4 @@
-@model project.Models.Project;
+@model project.Models.EntityFramework.Project;
 
 @{
     ViewData["Title"] = "Inspect Project";
@@ -12,8 +12,8 @@
 
 
 <form asp-action="Edit" method="post">
-        <input asp-for="ownerId" hidden/>
-        <input asp-for="id" hidden/>
+        <input asp-for="OwnerID" hidden/>
+        <input asp-for="ID" hidden/>
         <div class="border p-3">
             <div class="form-group row">
                 <h2 class="text-info pl-3">@ViewData["Title"]</h2>
@@ -23,56 +23,56 @@
                     
                     <div class="form-group row">
                         <div class="col-4">
-                            <label asp-for="name"></label>
+                            <label asp-for="Name"></label>
                         </div>
                         <div class="col-8">
-                            <input id="input1" asp-for="name" class="form-control"/>
-                            <span asp-validation-for="name" class="text-danger"></span>
+                            <input id="input1" asp-for="Name" class="form-control"/>
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                     </div>
         
                     <div class="form-group row">
                         <div class="col-4">
-                            <label asp-for="active"></label>
+                            <label asp-for="Active"></label>
                         </div>
                         <div class="col-8">
-                            <input id="input2" asp-for="active" class="form-control" />
-                            <span asp-validation-for="active" class="text-danger"></span>
+                            <input id="input2" asp-for="Active" class="form-control" />
+                            <span asp-validation-for="Active" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-4">
-                            <label asp-for="description"></label>
+                            <label asp-for="Description"></label>
                         </div>
                         <div class="col-8">
-                            <input id="input3" asp-for="description" class="form-control" />
-                            <span asp-validation-for="description" class="text-danger"></span>
+                            <input id="input3" asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-4">
-                            <label asp-for="timeBudget"></label>
+                            <label asp-for="TimeBudget"></label>
                         </div>
                         <div class="col-8">
-                            <input id="input4" asp-for="timeBudget" class="form-control" />
-                            <span asp-validation-for="timeBudget" class="text-danger"></span>
+                            <input id="input4" asp-for="TimeBudget" class="form-control" />
+                            <span asp-validation-for="TimeBudget" class="text-danger"></span>
                         </div>
                     </div>
                     
                     <div class="form-group row">
                         <div class="col-4">
-                            <label asp-for="subActivities"></label>
+                            <label asp-for="Tags"></label>
                         </div>
 
                         <div class="col-8">
                             <select id="subAct-field" class="custom-select"
-                                    asp-items="@(new SelectList(Model.subActivities))">
+                                    asp-items="@(new SelectList(Model.Tags.Select(tag => tag.Name)))">
                             </select>
                             @if (editable)
                             {
-                                <input id="input5" name="sub" style="display: inline-block" placeholder="new subactivity" class="form-control">
+                                <input id="input5" name="sub" style="display: inline-block" placeholder="new tag" class="form-control">
                             }
                         </div>
                     </div>

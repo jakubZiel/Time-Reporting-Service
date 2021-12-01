@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using project.Models.Services;
-using project.Models;
 using Microsoft.AspNetCore.Http;
+using project.Models.EntityFramework;
 
 namespace project.Controllers
 {
     public class ActivityController : BaseController
     {
-        public ActivityController(IContext context) : base(context){}
+        private readonly TRSDbContext _database;
+        public ActivityController(IContext context, TRSDbContext database ) : base(context)
+        {
+            _database = database;
+        }
 
         public IActionResult Index(int id = 0)
         {   
@@ -28,23 +32,17 @@ namespace project.Controllers
 
             ViewData["CurrentDate"] = requestedDate;
             
-            if (_context.activities.ContainsKey(getFileName(employeeId, requestedDate))){
-                
-                List<Activity> todayActivities = 
-                        _context.activities[getFileName(employeeId, requestedDate)]
-                        .Where(activity => activity.dateCreated.Date == requestedDate.Date).ToList();
-                
-                return View(todayActivities);
-            }else{
+            List<Activity> todayActivities = _database.Activity
+                .Where(a => a.EmployeeID == employeeId && requestedDate.Date == a.DateCreated.Date)
+                .ToList();
 
-                List<Activity> todayActivities = new List<Activity>();
-                return View(todayActivities);
-            }
+            return View(todayActivities);
         }
 
-        public IActionResult Create(string id = null)
+        public IActionResult Create(int id)
         {
-            ViewData["project"] = _context.projects.Find(project => project.id == id);
+            Project project = _database.Project.Find(id);
+            ViewData["project"] = project;
 
             return View();
         }
@@ -53,12 +51,14 @@ namespace project.Controllers
         {    
             int employeeId = sessionToEmployeeId();       
 
-            Activity activity = _context.activities[findFile(employeeId, id)].Find(act => act.id == id);
+            Activity activity = _database.Activity.Where(a => a.ID == id).Single<Activity>();
+
 
             if (activity == null)
                 return NotFound();      
             
-            Project project = _context.projects.Find(project =>  activity.projectId == project.id);
+            Project project = _database.Project.Where(p => p.ID == activity.ProjectID).Single<Project>();
+            
             ViewData["project"] = project;
             
             return View(activity);
@@ -68,10 +68,7 @@ namespace project.Controllers
         {
             int employeeId = sessionToEmployeeId();
 
-            string fileName = findFile(employeeId, id);
-
-            Activity activity = _context.activities[fileName].Find(act => act.id == id);
-
+            Activity activity = _database.Activity.Where(a => a.ID == id).Single<Activity>();
             if (activity is null){
                 return NotFound();
             }
@@ -87,10 +84,12 @@ namespace project.Controllers
             int employeeId = sessionToEmployeeId();
             DateTime month = DateTime.Today.Date;
 
-            activity.active = !_context.reports.ContainsKey(getFileName(employeeId, DateTime.Now.Date));
+            activity.Frozen = _database.Report.Where(r => r.month.Date == month.Date).Any();
+            activity.DateCreated = DateTime.Now.Date;
+            activity.EmployeeID = employeeId;
 
-            _context.add(activity, getFileName(employeeId, month));
-            _context.saveActivities(getFileName(employeeId, month));
+            _database.Activity.Add(activity);
+            _database.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -100,17 +99,12 @@ namespace project.Controllers
         public IActionResult Delete(int id)
         {    
             int employeeId = sessionToEmployeeId();
-            
-            string fileName = findFile(employeeId, id);
 
-            Activity activity = 
-                _context.activities[fileName]
-                .Find(activity => activity.id == id);   
-            
-            _context.activities[fileName]
-                .Remove(activity);
+            Activity activity =_database.Activity.Where(a => a.ID == id).Single<Activity>();
 
-            _context.saveActivities(fileName);
+            _database.Activity.Remove(activity);
+
+            _database.SaveChanges();
 
             return RedirectToAction("Index"); 
         }
@@ -118,16 +112,17 @@ namespace project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Activity body)
-        {
-            int employeeId = sessionToEmployeeId();
-            
-            string fileName = findFile(employeeId, body.id);
-            int index = _context.activities[fileName].FindIndex(act => act.id == body.id);
+        { 
+            Activity original = _database.Activity.Find(body.ID);
 
-            if ( index != -1){ 
-                _context.activities[fileName][index] = body; 
-                _context.saveActivities(fileName);        
-            }
+            original.Name = body.Name;
+            original.DurationMinutes = body.DurationMinutes;
+            original.Description = body.Description;
+            original.Tag = body.Tag;
+
+            _database.Update(original);
+            _database.SaveChanges();
+            
             return RedirectToAction("Index");   
         }
     }

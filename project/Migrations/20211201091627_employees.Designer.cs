@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project.Models.EntityFramework;
 
 namespace project.Migrations
 {
     [DbContext(typeof(TRSDbContext))]
-    partial class TRSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211201091627_employees")]
+    partial class employees
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +52,7 @@ namespace project.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("ProjectID")
+                    b.Property<int?>("ProjectID")
                         .HasColumnType("int");
 
                     b.Property<int?>("ReportID")
@@ -72,20 +74,6 @@ namespace project.Migrations
                     b.HasIndex("ReportID");
 
                     b.ToTable("Activity");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            DateCreated = new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "checking if everything is ok with the API",
-                            DurationMinutes = 30,
-                            EmployeeID = 1,
-                            Frozen = false,
-                            Name = "API debugging",
-                            ProjectID = 1,
-                            Tag = "debugging"
-                        });
                 });
 
             modelBuilder.Entity("project.Models.EntityFramework.Employee", b =>
@@ -192,35 +180,6 @@ namespace project.Migrations
                     b.HasIndex("OwnerID");
 
                     b.ToTable("Project");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Active = true,
-                            Description = "Some React fullstack application",
-                            Name = "ReactApp",
-                            OwnerID = 1,
-                            TimeBudget = 1500
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Active = true,
-                            Description = "Some Vue.Js frontend application",
-                            Name = "VueApp",
-                            OwnerID = 2,
-                            TimeBudget = 2200
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Active = true,
-                            Description = "Some Spring Boot backend application",
-                            Name = "Spring Boot App",
-                            OwnerID = 4,
-                            TimeBudget = 1600
-                        });
                 });
 
             modelBuilder.Entity("project.Models.EntityFramework.Report", b =>
@@ -262,44 +221,6 @@ namespace project.Migrations
                     b.HasIndex("ProjectID");
 
                     b.ToTable("Tag");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Name = "coding",
-                            ProjectID = 1
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Name = "debuging",
-                            ProjectID = 1
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Name = "database",
-                            ProjectID = 2
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Name = "coding",
-                            ProjectID = 2
-                        },
-                        new
-                        {
-                            ID = 5,
-                            Name = "drinking",
-                            ProjectID = 3
-                        },
-                        new
-                        {
-                            ID = 6,
-                            Name = "coding",
-                            ProjectID = 3
-                        });
                 });
 
             modelBuilder.Entity("project.Models.EntityFramework.Activity", b =>
@@ -312,9 +233,7 @@ namespace project.Migrations
 
                     b.HasOne("project.Models.EntityFramework.Project", "Project")
                         .WithMany("Activities")
-                        .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectID");
 
                     b.HasOne("project.Models.EntityFramework.Report", null)
                         .WithMany("Reported")

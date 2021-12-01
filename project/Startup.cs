@@ -40,6 +40,7 @@ namespace project
             services.AddDbContext<TRSDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
         }
 

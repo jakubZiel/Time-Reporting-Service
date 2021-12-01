@@ -13,10 +13,10 @@ namespace project.Models.EntityFramework
         public bool Active {get; set;}
         public string ? Description {get; set;}
 
-        public ICollection<Activity> Activities { get; set; }
-        public ICollection<EmployeeProject> EmployeeProjects { get; set; }
-        public Employee Owner { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; }
+        public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; }
+        public virtual Employee Owner { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
 
         public class EmployeeConfig : IEntityTypeConfiguration<Project>
         {
@@ -27,6 +27,35 @@ namespace project.Models.EntityFramework
 
                 builder.Property(s => s.Name)
                     .HasMaxLength(40);
+
+                builder.HasData(
+                       new Project() { 
+                            ID = 1,
+                            OwnerID = 1,
+                            Name = "ReactApp",
+                            TimeBudget = 1500,
+                            Active = true,
+                            Description = "Some React fullstack application"
+                       },
+                       new Project() 
+                       {
+                           ID = 2,
+                           OwnerID = 2,
+                           Name = "VueApp",
+                           TimeBudget = 2200,
+                           Active = true,
+                           Description = "Some Vue.Js frontend application"
+                       },
+                       new Project()
+                       {
+                           ID = 3,
+                           OwnerID = 4,
+                           Name = "Spring Boot App",
+                           TimeBudget = 1600,
+                           Active = true,
+                           Description = "Some Spring Boot backend application"
+                       }                       
+                    );
             }
         }
     }

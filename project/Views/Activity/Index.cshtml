@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.List<project.Models.Activity>
+﻿@model System.Collections.Generic.List<project.Models.EntityFramework.Activity>
 
 @{
     ViewData["Title"] = "Your today activities";
@@ -16,7 +16,7 @@
     </div>
 }
 <div>
-    <p>total activity time : @Model.Sum(activity => activity.durationMinutes)</p>
+    <p>total activity time : @Model.Sum(activity => activity.DurationMinutes)</p>
     <h3>user info : @name</h3>
 </div>
 
@@ -41,17 +41,17 @@
                 {
 
                     <tr>
-                        <td width="25%">@activity.name</td>
-                        <td width="10%">@activity.active</td>
-                        <td width="40%">@activity.description</td>
-                        <td width="5%">@activity.durationMinutes</td>
+                        <td width="25%">@activity.Name</td>
+                        <td width="10%">@activity.Frozen</td>
+                        <td width="40%">@activity.Description</td>
+                        <td width="5%">@activity.DurationMinutes</td>
                         
                         <td>
-                            @if (activity.active)
+                            @if (!activity.Frozen)
                             {
                                 <div style="align-content: center">
-                                    <a style="margin-right: 5px; margin-left: 6px" asp-route-Id=@activity.id asp-action="DeleteView" type="button" class="btn btn-danger">Delete</a>
-                                    <a style="margin-left: 5px" asp-route-Id=@activity.id asp-action="EditView" type="button" class="btn btn-success">Edit</a>
+                                    <a style="margin-right: 5px; margin-left: 6px" asp-route-Id=@activity.ID asp-action="DeleteView" type="button" class="btn btn-danger">Delete</a>
+                                    <a style="margin-left: 5px" asp-route-Id=@activity.ID asp-action="EditView" type="button" class="btn btn-success">Edit</a>
                                 </div>
                             }
                             else

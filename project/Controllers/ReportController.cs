@@ -3,83 +3,79 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using project.Models.Services;
-using project.Models;
 using Microsoft.AspNetCore.Http;
 using System.Text.RegularExpressions;
+using project.Models.EntityFramework;
+
 namespace project.Controllers
 {
     public class ReportController : BaseController
     {   
         private string reportIdSessionKey = "reportMonth";
-        public ReportController(IContext context) : base(context){}
+        
+        private readonly TRSDbContext _database;
+        
+        public ReportController(IContext context, TRSDbContext database) : base(context)
+        {
+            _database = database;
+        }
 
         public IActionResult Index(int nextMonth = 0)
         {
             ViewData["Title"] = "Affected Projects";
-            int employeeId = sessionToEmployeeId();            
+            int employeeId = sessionToEmployeeId();
             DateTime reportMonth = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
 
             if (nextMonth != 1 || reportMonth.Date.Year != DateTime.Now.Year || reportMonth.Date.Month != DateTime.Now.Month)
             {
                 reportMonth = reportMonth.AddMonths(nextMonth);
-                HttpContext.Session.SetString(reportIdSessionKey, reportMonth.ToString()); 
+                HttpContext.Session.SetString(reportIdSessionKey, reportMonth.ToString());
             }
 
             ViewData[reportIdSessionKey] = reportMonth;
 
             string reportName = getFileName(employeeId, reportMonth);
+            Report report = _database.Report.Where(r => r.Month == reportMonth).Single();
+
             HashSet<string> projectIds = new HashSet<string>();
 
-            if (_context.activities.ContainsKey(reportName)){
+            if (report is null)
+                return View(null);
 
-                _context.activities[reportName].ForEach(activity => {
-                    
-                    if (activity.projectId != null)
-                        projectIds.Add(activity.projectId);
-                });
+
+            List<Project> projects = _database.Project.ToList();
+
+            Dictionary<int, int> projectContributions = new Dictionary<int, int>();
+
+            List<IGrouping<int, Activity>> groupedActivites = _database.Activity
+                .Where(a => a.DateCreated == reportMonth)
+                .GroupBy(a => a.ProjectID)
+                .ToList();
+
+            groupedActivites.ForEach(group =>
+            {
+                projectContributions.Add(group.Key, group.Sum(a => a.DurationMinutes));
+            });
+
+            ViewData["contributions"] = projectContributions;
                 
-                Dictionary<string, int> projectContributions = new Dictionary<string, int>();
-
-                List<Project> projects = 
-                    projectIds
-                    .ToList()
-                    .ConvertAll(projectId => _context.projects.Find(project => project.id == projectId));
-
-                projects.ForEach(project => {
-                    int contribution = 0;
-
-                    if(_context.activities.ContainsKey(getFileName(employeeId, reportMonth))){
-
-                        contribution = _context.activities[getFileName(employeeId, reportMonth)]
-                            .Where(activity => activity.projectId == project.id)
-                            .Sum(activity => activity.durationMinutes);
-                    }
-                    projectContributions.Add(project.id, contribution);
-                });
-                
-                ViewData["contributions"] = projectContributions;
-                
-                return View(projects);
-            }
-
-            return View(null);
+            return View(projects);            
         }
 
-        public IActionResult Inspect(string projectId)
+        public IActionResult Inspect(int projectId)
         {   
             int employeeId = sessionToEmployeeId();
             DateTime month = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
 
             string fileName = getFileName(employeeId, month);
 
-            List<Activity> activities =
-                _context
-                .activities[fileName]
-                .Where(activity => activity.projectId == projectId)
+            List<Activity> activities = _database.Activity
+                .Where(a => a.ProjectID == projectId)
                 .ToList();
+
         
             try {
-                ViewData["report"] = _context.reports[fileName].accepted;
+                ViewData["report"] = activities.Select(a => new AcceptedRecord(a.ID, a.));
 
             }catch{
                 ViewData["report"] = null;
@@ -97,7 +93,7 @@ namespace project.Controllers
             
             ViewData["reportMonth"] = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
 
-            return View("Index", _context.projects.Where(project => project.ownerId == employeeId).ToList());
+            return View("Index", _database.Project.Where(project => project.OwnerID == employeeId).ToList());
         }
 
         public IActionResult InspectReports(string projectId)
@@ -109,8 +105,7 @@ namespace project.Controllers
 
             keys.ForEach(key => {
                 
-                List<Activity> partialRecords = 
-                _context.activities[key]
+                List<Activity> partialRecords = _context.activities[key]
                     .Where(act => act.projectId == projectId)
                     .ToList();
                 

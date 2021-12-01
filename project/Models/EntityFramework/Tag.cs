@@ -16,6 +16,45 @@ namespace project.Models.EntityFramework
             {
                 builder.Property(s => s.Name)
                     .HasMaxLength(40);
+
+                builder.HasData(
+                        new Tag() 
+                        {
+                            ID = 1,
+                            ProjectID = 1,
+                            Name = "coding"
+                        },
+                        new Tag() 
+                        {
+                            ID = 2,
+                            ProjectID = 1,
+                            Name = "debuging"
+                        },
+                        new Tag()
+                        {
+                            ID = 3,
+                            ProjectID = 2,
+                            Name = "database"
+                        },
+                        new Tag()
+                        {
+                            ID = 4,
+                            ProjectID = 2,
+                            Name = "coding"
+                        },
+                        new Tag()
+                        {
+                            ID = 5,
+                            ProjectID = 3,
+                            Name = "drinking"
+                        },
+                        new Tag()
+                        {
+                            ID = 6,
+                            ProjectID = 3,
+                            Name = "coding"
+                        }
+                    );
             }
         }
 

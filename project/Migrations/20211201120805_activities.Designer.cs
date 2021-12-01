@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project.Models.EntityFramework;
 
 namespace project.Migrations
 {
     [DbContext(typeof(TRSDbContext))]
-    partial class TRSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211201120805_activities")]
+    partial class activities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

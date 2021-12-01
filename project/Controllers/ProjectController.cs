@@ -1,21 +1,27 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using project.Models.Services;
-using project.Models;
+using project.Models.EntityFramework;
 
 namespace project.Controllers
 {
     public class ProjectController : BaseController
-    {        
-        public ProjectController(IContext context) : base(context){}
+    {
+        private TRSDbContext _database;
+
+        public ProjectController(IContext context, TRSDbContext database) : base(context)
+        { 
+            _database = database;
+        }
 
         public IActionResult Index()
         {
-
             int employeeId = sessionToEmployeeId();
             ViewData["employeeId"] = employeeId;
 
-            return View(_context.projects);
+            return View(_database.Project.ToList());
         }
 
         public IActionResult Create()
@@ -23,20 +29,20 @@ namespace project.Controllers
             return View();
         }
 
-        public IActionResult InspectView(string id)
+        public IActionResult InspectView(int id)
         {
             ViewData["editable"] = false;
-            Project project = _context.projects.Find(project => project.id == id);
-            
+            Project project = _database.Project.Find(id);
+
             return View(project);
         }
 
-        public IActionResult EditView(string id)
+        public IActionResult EditView(int id)
         {
             ViewData["editable"] = true;
-            Project project = _context.projects.Find(project => project.id == id);
+            Project project = _database.Project.Find(id);
 
-            if (project is null || !project.active)
+            if (project is null || !project.Active)
             {
                 return RedirectToAction("Index");
             }
@@ -50,11 +56,11 @@ namespace project.Controllers
         {
             int employeeId = sessionToEmployeeId();
                         
-            project.active = true;            
-            project.ownerId = employeeId;
+            project.Active = true;            
+            project.OwnerID = employeeId;
             
-            _context.add(project);
-            _context.saveProjects();
+            _database.Add(project);
+            _database.SaveChanges();
 
             return RedirectToAction("Index");           
         }
@@ -63,19 +69,24 @@ namespace project.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Project project, string sub)
         {
-            int index =_context.projects.FindIndex(proj => proj.id == project.id);
+            Project original = _database.Project.Find(project.ID);
 
-            if (index >= 0)
+
+            if (original is not null)
             {
-                project.subActivities = _context.projects[index].subActivities;
-                
+                original.Name = project.Name;
+                original.Active = project.Active;
+                original.Description = project.Description;
+                original.TimeBudget = project.TimeBudget;
+
+
                 if (sub != null)
-                    project.subActivities.Add(sub);
-                
-                _context.projects[index] = project;
-                _context.saveProjects();
+                    original.Tags.Add(new Tag() { ProjectID = original.ID, Name = sub}) ;
+
+                _database.Update(original);
+                _database.SaveChanges();
             }
-            return RedirectToAction("EditView", new {id = project.id});        
+            return RedirectToAction("EditView", new {id = original.ID});        
         }
     }
 }

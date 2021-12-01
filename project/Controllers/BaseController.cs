@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
 using project.Models;
+using project.Models.EntityFramework;
 
 namespace project.Controllers
 {
@@ -13,7 +14,7 @@ namespace project.Controllers
     {
         protected string surnameSessionKey = "surname";
         
-        protected Context _context;
+        protected Context _context;      
 
         protected BaseController(IContext context)
         {
@@ -41,7 +42,7 @@ namespace project.Controllers
 
         protected string getFileName(int employeeId, DateTime date)
         {
-            Employee employee = _context.employees.Find(emp => emp.id == employeeId);
+            Models.Employee employee = _context.employees.Find(emp => emp.id == employeeId);
             return $"{employee.name}-{employee.surname}-{date.Month}-{date.Year}.json";
         }
     }
