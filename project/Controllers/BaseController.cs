@@ -1,11 +1,6 @@
 using System.Linq;
-using project.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System;
-using System.Text.RegularExpressions;
-using project.Models;
 using project.Models.EntityFramework;
 
 namespace project.Controllers
@@ -14,36 +9,16 @@ namespace project.Controllers
     {
         protected string surnameSessionKey = "surname";
         
-        protected Context _context;      
-
-        protected BaseController(IContext context)
+        protected readonly TRSDbContext _database;
+        protected BaseController(TRSDbContext database)
         {
-            _context = (Context) context;
+            _database = database;
         }
 
         protected int sessionToEmployeeId()
         {
             string data = HttpContext.Session.GetString(surnameSessionKey);
-            return _context.employees.Find(emp => emp.surname == data).id;            
-        }
-        protected string findFile(int employeeId, int activityId)
-        {    
-            List<string> keys = _context.activities.Keys.ToList();
-
-            string[] split = getFileName(employeeId, DateTime.Now.Date).Split('-');
-            string pattern = split[0] + "-" + split[1] + "*";
-            
-            keys = keys.Where(key => Regex.Match(key, pattern).Success).ToList(); 
-
-            string found = keys.Find(key => _context.activities[key].Find(activity => activity.id == activityId) != null);
-
-            return found;
-        }
-
-        protected string getFileName(int employeeId, DateTime date)
-        {
-            Models.Employee employee = _context.employees.Find(emp => emp.id == employeeId);
-            return $"{employee.name}-{employee.surname}-{date.Month}-{date.Year}.json";
+            return _database.Employee.Where(e => e.Surname == data).Single().ID;          
         }
     }
 }

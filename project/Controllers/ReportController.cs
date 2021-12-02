@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using project.Models.Services;
 using Microsoft.AspNetCore.Http;
-using System.Text.RegularExpressions;
 using project.Models.EntityFramework;
 
 namespace project.Controllers
@@ -13,12 +11,7 @@ namespace project.Controllers
     {   
         private string reportIdSessionKey = "reportMonth";
         
-        private readonly TRSDbContext _database;
-        
-        public ReportController(IContext context, TRSDbContext database) : base(context)
-        {
-            _database = database;
-        }
+        public ReportController(TRSDbContext database) : base(database) { }
 
         public IActionResult Index(int nextMonth = 0)
         {

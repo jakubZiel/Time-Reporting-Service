@@ -2,19 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using project.Models.Services;
 using project.Models.EntityFramework;
 
 namespace project.Controllers
 {
     public class ProjectController : BaseController
     {
-        private TRSDbContext _database;
-
-        public ProjectController(IContext context, TRSDbContext database) : base(context)
-        { 
-            _database = database;
-        }
+        public ProjectController(TRSDbContext database) : base(database) { }
 
         public IActionResult Index()
         {

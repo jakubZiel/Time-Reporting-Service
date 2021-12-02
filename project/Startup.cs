@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using project.Models.EntityFramework;
-using project.Models.Services;
 
 namespace project
 {
@@ -34,8 +33,6 @@ namespace project
             services
                     .AddControllersWithViews()
                     .AddRazorRuntimeCompilation();
-
-            services.AddSingleton<IContext, Context>();
             
             services.AddDbContext<TRSDbContext>(options =>
             {

@@ -1,20 +1,20 @@
 using System;
 using System.Net;
-using project.Models.Services;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using project.Models;
 using Microsoft.AspNetCore.Http;
-
+using project.Models.EntityFramework;
 namespace project.Controllers
 {   
     public class IdentityController : BaseController
     {
-        public IdentityController(IContext context) : base(context){}
+        public IdentityController(TRSDbContext database) : base(database) { }
 
         public IActionResult Index()
         {
-            List<EmployeeView> viewModel = _context.employees.ConvertAll(employee => new EmployeeView(employee));
+            List<Employee> viewModel = _database.Employee.ToList();
+
 
             ViewData["Title"] = "Login";
 
@@ -25,17 +25,17 @@ namespace project.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(int id, string password)
         {
-            Employee user = _context.employees.Find(employee => employee.id == id && employee.password == password);
+            Employee user = _database.Employee.Find(id);
         
             if (user is null){
 
                 ViewData["Title"] = "Wrong Credentials";
-                List<EmployeeView> viewModel = _context.employees.ConvertAll(employee => new EmployeeView(employee));
+                List<Employee> viewModel = _database.Employee.ToList();
 
                 return View("Index", viewModel);
             }
             
-            HttpContext.Session.SetString(surnameSessionKey, user.surname);
+            HttpContext.Session.SetString(surnameSessionKey, user.Surname);
             HttpContext.Session.SetString("requestedDate", DateTime.Now.Date.ToString());
             HttpContext.Session.SetString("reportMonth", DateTime.Now.Date.ToString());
 

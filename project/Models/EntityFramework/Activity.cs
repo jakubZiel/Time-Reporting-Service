@@ -12,7 +12,6 @@ namespace project.Models.EntityFramework
         public int ? ReportID { get; set; }
 
         public DateTime DateCreated { get; set; }
-        public int ? ReportedTime { get; set; }
         public int ? AcceptedTime { get; set; }
         public int DurationMinutes { get; set; }
         public string Name { get; set; }

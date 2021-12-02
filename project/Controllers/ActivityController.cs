@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using project.Models.Services;
 using Microsoft.AspNetCore.Http;
 using project.Models.EntityFramework;
 
@@ -10,11 +9,7 @@ namespace project.Controllers
 {
     public class ActivityController : BaseController
     {
-        private readonly TRSDbContext _database;
-        public ActivityController(IContext context, TRSDbContext database ) : base(context)
-        {
-            _database = database;
-        }
+        public ActivityController(TRSDbContext database ) : base(database) { }
 
         public IActionResult Index(int id = 0)
         {   

@@ -1,4 +1,4 @@
-@model System.Collections.Generic.List<project.Models.EmployeeView>
+@model System.Collections.Generic.List<project.Models.EntityFramework.Employee>
 @{
     string title = (string) ViewData["Title"];
 
@@ -24,15 +24,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (EmployeeView employee in Model)
+                @foreach (project.Models.EntityFramework.Employee employee in Model)
                 {
 
                     <tr>
-                        <td width="5%">@employee.id</td>
-                        <td width="25%">@employee.name</td>
-                        <td width="25%">@employee.surname</td>
+                        <td width="5%">@employee.ID</td>
+                        <td width="25%">@employee.Name</td>
+                        <td width="25%">@employee.Surname</td>
                         <td width="1%">
-                            <button class="btn btn-info" style="margin-left: 5px" onclick="submitLogin(event, @employee.id)">Login</button>
+                            <button class="btn btn-info" style="margin-left: 5px" onclick="submitLogin(event, @employee.ID)">Login</button>
                         </td>
                     </tr>
                 }
