@@ -1,15 +1,12 @@
-@model List<Activity>
+ @model List<project.Models.EntityFramework.Activity>
 
 @{
-    List<AcceptedRecord> acceptedRecords = (List<AcceptedRecord>) ViewData["report"];
-
     bool reportInspectView = false;
 
     List<string> recordKeys;
 
     int budget = 0;
     int usedBudget = 0;
-    List<bool> frozen = new List<bool>();
 
     bool isProjectActive = true;
 
@@ -19,7 +16,6 @@
         budget = (int) ViewData["budget"];
         usedBudget = (int) ViewData["usedBudget"];
         recordKeys = (List<string>) ViewData["recordKeys"];
-        frozen = (List<bool>) ViewData["frozenRecords"];
         isProjectActive = (bool) ViewData["isProjectActive"];
     }
     else
@@ -38,7 +34,6 @@
             <h2 style="display:inline-block">Remaining Budget : </h2>
             <h2 style="@style; display:inline-block">@diff/@budget</h2>
         </div>
-
     }
 
     @if (Model is not null && Model.Count > 0)
@@ -66,41 +61,30 @@
 
                 @for (int index = 0; index < Model.Count; index++)
                 {
-                    Activity activity = Model[index];
-
-                    AcceptedRecord accepted = null;
-
-                    if (acceptedRecords != null)
-                    {
-                        accepted = acceptedRecords.Find(record => record.id == activity.id);
-                    }
+                    project.Models.EntityFramework.Activity activity = Model[index];
 
                     <tr>
-                        <td width="25%">@activity.name
-
-                        </td>
+                        <td width="25%">@activity.Name</td>
 
                         @if (reportInspectView)
                         {
-                            var elements = recordKeys[index].Split('-');
-                            var sname = elements[1];
-                            <td>@sname</td>
+                            <td>@activity.Employee.Name @activity.Employee.Surname</td>
                         }
 
-                        <td width="40%">@activity.description</td>
-                        <td width="5%">@activity.durationMinutes</td>
+                        <td width="40%">@activity.Description</td>
+                        <td width="5%">@activity.DurationMinutes</td>
 
                         @if (reportInspectView && isProjectActive)
                         {
                             string inputId = "input" + index;
 
-                            if (frozen[index])
+                            if (activity.Frozen)
                             {
 
-                                if (accepted != null)
+                                if (activity.AcceptedTime is not null)
                                 {
-                                    string placeholder = accepted.time.ToString();
-                                    int difference = accepted.time - activity.durationMinutes;
+                                    string placeholder = activity.AcceptedTime.ToString();
+                                    int difference = activity.AcceptedTime.Value - activity.DurationMinutes;
                                     string style = difference >= 0 ? "color : green" : "color : red";
                                     string sign = "";
 
@@ -124,7 +108,7 @@
                                 <td>
                                     <button
                                         class="btn btn-info w-100"
-                                        onclick="submitChange(@activity.id,'@recordKeys[index]', @index)">
+                                        onclick="submitChange(@activity.ID, @activity.ReportID, @index)">
                                         Change
                                     </button>
                                 </td>
@@ -139,10 +123,10 @@
                         else
                         {
 
-                            if (accepted != null)
+                            if (activity.AcceptedTime is not null)
                             {
-                                string placeholder = accepted.time.ToString();
-                                int difference = accepted.time - activity.durationMinutes;
+                                string placeholder = activity.AcceptedTime.ToString();
+                                int difference = activity.AcceptedTime.Value - activity.DurationMinutes;
                                 string style = difference >= 0 ? "color : green" : "color : red";
                                 string sign = "";
 
@@ -151,7 +135,7 @@
                                     sign = "+";
                                 }
 
-                                <td>@accepted.time</td>
+                                <td>@activity.AcceptedTime</td>
                                 <td style="@style">@sign@difference</td>
                             }
                             else

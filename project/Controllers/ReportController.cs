@@ -34,25 +34,19 @@ namespace project.Controllers
 
             ViewData[reportIdSessionKey] = reportMonth;
 
-            string reportName = getFileName(employeeId, reportMonth);
-            Report report = _database.Report.Where(r => r.Month == reportMonth).Single();
-
-            HashSet<string> projectIds = new HashSet<string>();
-
-            if (report is null)
-                return View(null);
-
-
-            List<Project> projects = _database.Project.ToList();
+            List<Project> projects = _database.Project
+                .Where(p => p.Activities.Where(a => a.DateCreated.Year == reportMonth.Year && a.DateCreated.Month == reportMonth.Month && a.EmployeeID == employeeId).Any())
+                .ToList();
 
             Dictionary<int, int> projectContributions = new Dictionary<int, int>();
 
-            List<IGrouping<int, Activity>> groupedActivites = _database.Activity
-                .Where(a => a.DateCreated == reportMonth)
+            var groupedActivities = _database.Activity
+                .Where(a => a.DateCreated.Year == reportMonth.Year && a.DateCreated.Month == reportMonth.Month)
+                .ToList()
                 .GroupBy(a => a.ProjectID)
                 .ToList();
 
-            groupedActivites.ForEach(group =>
+            groupedActivities.ForEach(group =>
             {
                 projectContributions.Add(group.Key, group.Sum(a => a.DurationMinutes));
             });
@@ -67,21 +61,14 @@ namespace project.Controllers
             int employeeId = sessionToEmployeeId();
             DateTime month = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
 
-            string fileName = getFileName(employeeId, month);
+            Project project = _database.Project.Find(projectId);
 
             List<Activity> activities = _database.Activity
-                .Where(a => a.ProjectID == projectId)
+                .Where(a => a.ProjectID == projectId && a.EmployeeID == employeeId)
                 .ToList();
 
-        
-            try {
-                ViewData["report"] = activities.Select(a => new AcceptedRecord(a.ID, a.));
-
-            }catch{
-                ViewData["report"] = null;
-            }
-            ViewData["projectId"] = projectId;
-            ViewData["isProjectActive"] = _context.projects.Find(proj => proj.id == projectId).active;
+            ViewData["projectId"] = project.Name;
+            ViewData["isProjectActive"] = project.Active;
             
             return View(activities);
         }
@@ -96,141 +83,102 @@ namespace project.Controllers
             return View("Index", _database.Project.Where(project => project.OwnerID == employeeId).ToList());
         }
 
-        public IActionResult InspectReports(string projectId)
-        {    
-            List<string> keys = _context.activities.Keys.ToList();
-
-            List<Activity> records = new List<Activity>();
-            List<string> recordKeys = new List<string>();
-
-            keys.ForEach(key => {
-                
-                List<Activity> partialRecords = _context.activities[key]
-                    .Where(act => act.projectId == projectId)
-                    .ToList();
-                
-                partialRecords.ForEach(act => recordKeys.Add(key));
-                records = records.Concat(partialRecords).ToList();
-            });
+        public IActionResult InspectReports(int projectId)
+        {
+            List<Activity> records = _database.Activity
+                .Where(a => a.ProjectID == projectId)
+                .ToList();
             
-            List<AcceptedRecord> acceptedRecords = new List<AcceptedRecord>();
-
-            keys.ForEach(key => {
-                if (_context.reports.ContainsKey(key)){
-                    acceptedRecords =  acceptedRecords.Concat(_context.reports[key].accepted).ToList();
-                }
-            });
-
-            ViewData["report"] = acceptedRecords;
-            ViewData["budget"] = _context.projects.Find(project => project.id == projectId).timeBudget;
+            List<string> recordKeys = new List<string>();
+            Project project = _database.Project.Find(projectId);
+            
+            ViewData["budget"] = project.TimeBudget;
             ViewData["usedBudget"] = calculateProjectBudget(projectId);
             ViewData["recordKeys"] = recordKeys;
-            ViewData["projectId"] = projectId;
+            ViewData["projectId"] = project.Name;
+            ViewData["isProjectActive"] = project.Active;
             
-            List<bool> frozenRecords = new List<bool>();
-
-            for (int i = 0; i < recordKeys.Count; i++){
-                if (_context.reports.ContainsKey(recordKeys[i]))
-                    frozenRecords.Add(_context.reports[recordKeys[i]].frozen);
-                else 
-                    frozenRecords.Add(false);
-            }
-
-            ViewData["frozenRecords"] = frozenRecords;
-            ViewData["isProjectActive"] = _context.projects.Find(proj => proj.id == projectId).active;
-            
-             return View("Inspect", records);  
+            return View("Inspect", records);  
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditReport(int activityId, string reportId, int newValue)
+        public IActionResult EditReport(int activityId, int reportId, int newValue)
         {   
-            Report report = _context.reports[reportId];
-
-            int index = report.accepted.FindIndex(record => record.id == activityId);
-
-            if (index > 0)
-                report.accepted[index].time = newValue; 
-            else 
-                report.accepted.Add(new AcceptedRecord(activityId, newValue));
-
-            _context.saveReport(reportId);
-
-            string projId = _context.activities[reportId].Find(act => act.id == activityId).projectId;
+            Activity activity = _database.Activity.Find(activityId);
             
-            return RedirectToAction("InspectReports", new {projectId = projId});
+            if (activity is not null)
+            {
+                activity.AcceptedTime = newValue;
+                _database.Activity.Update(activity);
+                _database.SaveChanges();
+            }
+
+            return RedirectToAction("InspectReports", new {projectId = activity.ProjectID});
         }
     
         public IActionResult CheckReports()
         {
-            List<string> keys = _context.activities.Keys.ToList();
-
             int employeeId = sessionToEmployeeId();
             DateTime month = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
 
-            string fileName = getFileName(employeeId, month);
-            
-            List<string> split = fileName.Split('-').ToList();
-            string prefix = split[0] + "-" + split[1] + "*";
+            List<Report> reports = _database.Report
+                .Where(r => r.EmployeeID == employeeId)
+                .ToList();
 
-            keys = keys.Where(key => Regex.Match(key, prefix).Success).ToList(); 
-
-            List<Tuple<bool, string>> reportPairs = new List<Tuple<bool, string>>();
-
-            keys.ForEach(key => {
-                if (_context.reports.ContainsKey(key))
-                    reportPairs.Add(new Tuple<bool, string>(true, key));
-                else
-                    reportPairs.Add(new Tuple<bool, string>(false, key));
-            });
-
-            return View(reportPairs);
+            return View(reports);
         }
 
-        public IActionResult InspectMonth(string report)
+        public IActionResult InspectMonth(int reportId)
         {
-            try {
-                ViewData["report"] = _context.reports[report].accepted;
+            Report report = _database.Report.Find(reportId);
+            int employeeId = sessionToEmployeeId();
 
-            }catch{
-                ViewData["report"] = null;
-            }
-            ViewData["projectId"] = report;
-            
-            return View("Inspect", _context.activities[report]);
+            ViewData["projectId"] = report.Month.ToString("MM/yyyy");
+                
+            return View("Inspect", _database.Activity.Where(a => a.DateCreated.Month == report.Month.Month && a.DateCreated.Year == report.Month.Year && a.EmployeeID == employeeId).ToList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Freeze(string reportId){
-            if (!_context.reports.ContainsKey(reportId))
+        public IActionResult Freeze(int reportId){
+
+            Report report = _database.Report.Find(reportId);
+
+            if (!report.Frozen)
             {
-                _context.add(new Report(true, reportId, new List<AcceptedRecord>()));
-                _context.activities[reportId].ForEach(activity =>
-                {
-                    activity.active = false;
-                });
-                _context.saveActivities(reportId);
-                
-                _context.saveReport(reportId);
+                report.Frozen = true;
+                _database.Report.Update(report);
+
+                report.Reported
+                    .ToList()
+                    .ForEach(a =>
+                    {
+                        a.Frozen = true;
+                        _database.Activity.Update(a);
+                    });
+
+                _database.SaveChanges();
             }
             return RedirectToAction("CheckReports");
         }
 
-        private int calculateProjectBudget(string projectId)
-        {    
-            List<string> reports = _context.reports.Keys.ToList();
+        private int calculateProjectBudget(int projectId)
+        {
             int sum = 0;
 
-            reports.ForEach(report => {
-                
-                _context.reports[report].accepted.ForEach(record => {
-                    var found =_context.activities[report].Find(activity => activity.id == record.id);
-                    if (found != null && found.projectId == projectId)
-                        sum += record.time;
-                });
+            List<Activity> projectActivities = _database.Activity
+                .Where(a => a.ProjectID == projectId)
+                .ToList();
+
+            projectActivities.ForEach(activity =>
+            {
+                if (activity.AcceptedTime != null)
+                {
+                    sum += activity.AcceptedTime.Value;
+                }
             });
+
             return sum;
         }
     }

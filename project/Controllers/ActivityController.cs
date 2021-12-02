@@ -84,9 +84,18 @@ namespace project.Controllers
             int employeeId = sessionToEmployeeId();
             DateTime month = DateTime.Today.Date;
 
-            activity.Frozen = _database.Report.Where(r => r.month.Date == month.Date).Any();
+            activity.Frozen = _database.Report.Where(r => r.Month.Date.Month == month.Month && r.Frozen && r.Month.Year == month.Year).Any();
             activity.DateCreated = DateTime.Now.Date;
             activity.EmployeeID = employeeId;
+
+
+            if (!_database.Report.Where(r => r.Month.Month == month.Month && r.Month.Year == month.Year && r.EmployeeID == employeeId).Any())
+            {
+                _database.Report.Add(new Report() { Month = month, Frozen = false, EmployeeID = employeeId });
+                _database.SaveChanges();
+            }
+
+            activity.ReportID = _database.Report.Where(r => r.Month.Month == month.Month && r.Month.Year == month.Year).First().ID;
 
             _database.Activity.Add(activity);
             _database.SaveChanges();

@@ -1,4 +1,4 @@
-@model List<Tuple<bool, string>>
+@model List<project.Models.EntityFramework.Report>
 
 @{
     
@@ -19,12 +19,12 @@
                 @for (int index = 0; index < Model.Count; index++){
 
                     <tr>
-                        <td>@Model[index].Item1</td>
-                        <td>@Model[index].Item2</td>
+                        <td>@Model[index].Frozen</td>
+                        <td>@Model[index].Month.ToString("MM/yyyy")</td>
                         <td width="20%" style="align-content: center">
                             <a 
                                 asp-action="InspectMonth"
-                                asp-route-report="@Model[index].Item2"
+                                asp-route-reportId="@Model[index].ID"
                                 class="btn btn-info" 
                                 style="margin-left: 10px">
                                 Inspect
@@ -36,7 +36,7 @@
                                     style="margin-left: 10px">
                                     Freeze
                                 </button>
-                                <input name="reportId" value="@Model[index].Item2" hidden/>
+                                <input name="reportId" value="@Model[index].ID" hidden/>
                             </form>
 
                         </td>

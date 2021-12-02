@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project.Models.EntityFramework;
 
 namespace project.Migrations
 {
     [DbContext(typeof(TRSDbContext))]
-    partial class TRSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211201185218_reports")]
+    partial class reports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,6 @@ namespace project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<int?>("AcceptedTime")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
@@ -54,9 +53,6 @@ namespace project.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("ReportID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ReportedTime")
                         .HasColumnType("int");
 
                     b.Property<string>("Tag")

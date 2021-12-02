@@ -9,15 +9,15 @@ namespace project.Models.EntityFramework
         public int ID { get; set; }
         public int ProjectID { get; set; }
         public int EmployeeID { get; set; }
-        public int? ReportID { get; set; }
+        public int ? ReportID { get; set; }
 
         public DateTime DateCreated { get; set; }
-        public DateTime? ReportedTime { get; set; }
-        public DateTime? AcceptedTime { get; set; }
+        public int ? ReportedTime { get; set; }
+        public int ? AcceptedTime { get; set; }
         public int DurationMinutes { get; set; }
         public string Name { get; set; }
         public bool Frozen { get; set; }
-        public string? Description { get; set; }
+        public string ? Description { get; set; }
         public string Tag { get; set; }
 
         public virtual Project Project { get; set; }
