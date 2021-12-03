@@ -5,7 +5,7 @@ namespace project.Migrations
 {
     public partial class Timestamp : Migration
     {
-        private List<string> tables = new List<string>() { "Activity", "Employee", "Project", "Report" };
+        private List<string> tables = new List<string>() { "Activity", "Employee", "Project", "Report", "Tag", "EmployeeProject" };
         protected override void Up(MigrationBuilder migrationBuilder)
         { 
             
