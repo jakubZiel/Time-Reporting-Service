@@ -15,7 +15,6 @@ namespace project.Controllers
         {
             List<Employee> viewModel = _database.Employee.ToList();
 
-
             ViewData["Title"] = "Login";
 
             return View(viewModel);
