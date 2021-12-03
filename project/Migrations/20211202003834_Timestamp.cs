@@ -1,26 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
-
+using System.Collections.Generic;
 namespace project.Migrations
 {
     public partial class Timestamp : Migration
     {
+        private List<string> tables = new List<string>() { "Activity", "Employee", "Project", "Report" };
         protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<DateTime>(
-                    name: "Timestamp",
-                    table: "Activity",
-                    type: "datetime2",
-                    nullable: true
-                );
+        { 
+            
+
+            tables.ForEach(tableName =>
+            {
+                migrationBuilder.AddColumn<byte[]>(
+                        name : "TimeStamp",
+                        table : tableName,
+                        type :  "TIMESTAMP",
+                        nullable : false
+                    );
+            });
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                    name: "Timestamp",
-                    table: "Activity"
-                );
+            tables.ForEach(tableName =>
+            {
+                migrationBuilder.DropColumn(
+                        name : "TimeStamp",
+                        table : tableName
+                    );
+            });
         }
     }
 }
