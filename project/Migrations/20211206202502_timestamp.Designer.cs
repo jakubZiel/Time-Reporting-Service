@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project.Models.EntityFramework;
 
 namespace project.Migrations
 {
     [DbContext(typeof(TRSDbContext))]
-    partial class TRSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211206202502_timestamp")]
+    partial class timestamp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace project.Migrations
                         new
                         {
                             ID = 1,
-                            DateCreated = new DateTime(2021, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateCreated = new DateTime(2021, 12, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "checking if everything is ok with the API",
                             DurationMinutes = 30,
                             EmployeeID = 1,
@@ -188,11 +190,6 @@ namespace project.Migrations
 
                     b.Property<int>("TimeBudget")
                         .HasColumnType("int");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
 
                     b.HasKey("ID");
 

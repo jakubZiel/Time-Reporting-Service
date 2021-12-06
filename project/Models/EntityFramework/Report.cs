@@ -13,15 +13,4 @@ namespace project.Models.EntityFramework
         public virtual ICollection<Activity> Reported { get; set; }
     }
 
-    public class AcceptedRecord
-    {
-        public int ID;
-        public int Time;
-
-        public AcceptedRecord(int id, int time)
-        {
-            this.ID = id;
-            this.Time = time;
-        }
-    }
 }

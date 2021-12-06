@@ -25,8 +25,11 @@ namespace project.Controllers
         public IActionResult Login(int id, string password)
         {
             Employee user = _database.Employee.Find(id);
-        
-            if (user is null){
+
+            if (user is null)
+                return NotFound();
+
+            if (user.Password != password){
 
                 ViewData["Title"] = "Wrong Credentials";
                 List<Employee> viewModel = _database.Employee.ToList();

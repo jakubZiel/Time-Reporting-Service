@@ -44,6 +44,22 @@ namespace project.Controllers
             return View("InspectView", project);
         }
 
+
+        public IActionResult EditViewConc(int id)
+        {
+            Project project = _database.Project.Find(id);
+            ViewData["editable"] = true;
+
+            if (project == null)
+            {
+                ViewData["concurrency"] = "Project has been already deleted";
+                return View("InspectView");
+            }
+  
+            ViewData["concurrency"] = "Project has been already updated, but you can try to update it again.";
+            return View("InspectView", project);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Project project)
@@ -65,9 +81,14 @@ namespace project.Controllers
         {
             Project original = _database.Project.Find(project.ID);
 
-
             if (original is not null)
             {
+
+                if (!project.Timestamp.SequenceEqual(original.Timestamp))
+                {
+                    return RedirectToAction("EditViewConc", new { id = original.ID });
+                }
+
                 original.Name = project.Name;
                 original.Active = project.Active;
                 original.Description = project.Description;
@@ -79,8 +100,14 @@ namespace project.Controllers
 
                 _database.Update(original);
                 _database.SaveChanges();
+
+                return RedirectToAction("EditView", new { id = original.ID });
             }
-            return RedirectToAction("EditView", new {id = original.ID});        
+            else
+            {
+                return RedirectToAction("EditViewConc", new { id = original.ID });
+            }
+             
         }
     }
 }
