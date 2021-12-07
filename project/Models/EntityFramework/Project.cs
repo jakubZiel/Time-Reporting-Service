@@ -12,8 +12,6 @@ namespace project.Models.EntityFramework
         public int TimeBudget {get; set;}
         public bool Active {get; set;}
         public string ? Description {get; set;}
-        public byte[] Timestamp { get; set; }
-
 
         public virtual ICollection<Activity> Activities { get; set; }
         public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; }
@@ -29,8 +27,6 @@ namespace project.Models.EntityFramework
 
                 builder.Property(s => s.Name)
                     .HasMaxLength(40);
-                builder.Property(a => a.Timestamp)
-                    .IsRowVersion();
 
                 builder.HasData(
                        new Project() { 

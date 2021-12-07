@@ -55,25 +55,10 @@ namespace project.Controllers
             Project project = _database.Project.Where(p => p.ID == activity.ProjectID).Single<Project>();
             
             ViewData["project"] = project;
-            Console.WriteLine(activity.Timestamp[7]);
+            
             return View(activity);
         }
-
-        public IActionResult EditViewConc(int id)
-        {
-            Activity activity = _database.Activity.Find(id);
-
-            if (activity == null)
-            {
-                ViewData["concurrency"] = "Activity has been already deleted";
-                return View("EditView");
-            }
-  
-            ViewData["concurrency"] = "Activity has been already updated, but you can try to update it again.";
-            ViewData["project"] = activity.Project;
-            return View("EditView", activity);
-        }
-
+        
         public IActionResult DeleteView(int id)
         {
             int employeeId = sessionToEmployeeId();
@@ -94,7 +79,7 @@ namespace project.Controllers
             int employeeId = sessionToEmployeeId();
             DateTime month = DateTime.Today.Date;
 
-            activity.Frozen = _database.Report.Where(r => r.Month.Date.Month == month.Month && r.Frozen && r.Month.Year == month.Year && r.EmployeeID == employeeId).Any();
+            activity.Frozen = _database.Report.Where(r => r.Month.Date.Month == month.Month && r.Frozen && r.Month.Year == month.Year).Any();
             activity.DateCreated = DateTime.Now.Date;
             activity.EmployeeID = employeeId;
 
@@ -117,12 +102,12 @@ namespace project.Controllers
         [ValidateAntiForgeryToken]        
         public IActionResult Delete(int id)
         {    
-            Activity activity = _database.Activity.Find(id);
+            int employeeId = sessionToEmployeeId();
 
-            if (activity is null)
-                return NotFound("Already deleted!");
+            Activity activity =_database.Activity.Where(a => a.ID == id).Single<Activity>();
 
             _database.Activity.Remove(activity);
+
             _database.SaveChanges();
 
             return RedirectToAction("Index"); 
@@ -134,14 +119,6 @@ namespace project.Controllers
         { 
             Activity original = _database.Activity.Find(body.ID);
 
-            if (original == null)
-            {
-                return RedirectToAction("EditViewConc", new { id = body.ID });
-            }
-            if (!body.Timestamp.SequenceEqual(original.Timestamp))
-            {
-                return RedirectToAction("EditViewConc", new { id = original.ID });
-            }
             original.Name = body.Name;
             original.DurationMinutes = body.DurationMinutes;
             original.Description = body.Description;
@@ -149,8 +126,7 @@ namespace project.Controllers
 
             _database.Update(original);
             _database.SaveChanges();
-        
-
+            
             return RedirectToAction("Index");   
         }
     }

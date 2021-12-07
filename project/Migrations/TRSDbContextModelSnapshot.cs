@@ -60,11 +60,6 @@ namespace project.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
                     b.HasKey("ID");
 
                     b.HasIndex("EmployeeID");
@@ -79,7 +74,7 @@ namespace project.Migrations
                         new
                         {
                             ID = 1,
-                            DateCreated = new DateTime(2021, 12, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateCreated = new DateTime(2021, 12, 2, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "checking if everything is ok with the API",
                             DurationMinutes = 30,
                             EmployeeID = 1,
@@ -188,11 +183,6 @@ namespace project.Migrations
 
                     b.Property<int>("TimeBudget")
                         .HasColumnType("int");
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
 
                     b.HasKey("ID");
 
