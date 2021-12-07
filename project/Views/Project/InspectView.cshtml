@@ -101,10 +101,13 @@
     </div>
 </form>
 }
-
+@if (concurrency is not null)
+{
 <div class="col">
     <a asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
 </div>
+}
+
 
 
 <script>
