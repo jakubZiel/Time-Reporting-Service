@@ -105,7 +105,7 @@ namespace project.Controllers
                 _database.SaveChanges();
             }
 
-            activity.ReportID = _database.Report.Where(r => r.Month.Month == month.Month && r.Month.Year == month.Year).First().ID;
+            activity.ReportID = _database.Report.Where(r => r.Month.Month == month.Month && r.Month.Year == month.Year && r.EmployeeID == employeeId).First().ID;
 
             _database.Activity.Add(activity);
             _database.SaveChanges();
