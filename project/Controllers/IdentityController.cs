@@ -38,8 +38,9 @@ namespace project.Controllers
             }
             
             HttpContext.Session.SetString(surnameSessionKey, user.Surname);
-            HttpContext.Session.SetString("requestedDate", DateTime.Now.Date.ToString());
-            HttpContext.Session.SetString("reportMonth", DateTime.Now.Date.ToString());
+            HttpContext.Session.SetString(requestedDateKey, DateTime.Now.Date.ToString());
+            HttpContext.Session.SetString(reportMonthKey, DateTime.Now.Date.ToString());
+            HttpContext.Session.SetString(employeeIdSessionKey, user.ID.ToString());
 
             return RedirectToAction("Index", "Activity");    
         }

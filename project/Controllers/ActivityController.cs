@@ -78,7 +78,7 @@ namespace project.Controllers
         {
             int employeeId = sessionToEmployeeId();
 
-            Activity activity = _database.Activity.Where(a => a.ID == id).Single<Activity>();
+            Activity activity = _database.Activity.Find(id);
             if (activity is null){
                 return NotFound();
             }

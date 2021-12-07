@@ -9,7 +9,9 @@ namespace project.Controllers
     public abstract class BaseController : Controller
     {
         protected string surnameSessionKey = "surname";
-
+        protected string employeeIdSessionKey = "employeeId";
+        protected string reportMonthKey = "reportMonth";
+        protected string requestedDateKey = "requestedDate";
         protected readonly TRSDbContext _database;
         protected BaseController(TRSDbContext database)
         {
@@ -17,8 +19,7 @@ namespace project.Controllers
         }
         protected int sessionToEmployeeId()
         {
-            string data = HttpContext.Session.GetString(surnameSessionKey);
-            return _database.Employee.Where(e => e.Surname == data).Single().ID;
+            return Int32.Parse(HttpContext.Session.GetString(employeeIdSessionKey));
         }
 
         protected bool monthAndYearEquality(DateTime date1, DateTime date2)
