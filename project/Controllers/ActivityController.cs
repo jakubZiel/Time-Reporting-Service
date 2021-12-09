@@ -86,6 +86,7 @@ namespace project.Controllers
             return View(activity);
         }
 
+       
         [HttpPost]
         [ValidateAntiForgeryToken]   
         public IActionResult Create(Activity activity)
@@ -120,8 +121,10 @@ namespace project.Controllers
             Activity activity = _database.Activity.Find(id);
 
             if (activity is null)
-                return NotFound("Already deleted!");
-
+            {
+                ViewData["concurrency"] = "Activity has been already delted";
+                return View("DeleteView", null);
+            }
             _database.Activity.Remove(activity);
             _database.SaveChanges();
 
