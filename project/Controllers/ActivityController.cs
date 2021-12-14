@@ -68,7 +68,7 @@ namespace project.Controllers
                 ViewData["concurrency"] = "Activity has been already deleted";
                 return View("EditView");
             }
-  
+
             ViewData["concurrency"] = "Activity has been already updated, but you can try to update it again.";
             ViewData["project"] = activity.Project;
             return View("EditView", activity);

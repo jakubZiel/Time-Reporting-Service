@@ -36,8 +36,9 @@ namespace project
             
             services.AddDbContext<TRSDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("AzureConnection"));
-                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("AzureConnection"));
+                string connection = "AzureConnection"; 
+                options.UseSqlServer(Configuration.GetConnectionString(connection));
+                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString(connection));
             });
         }
 
