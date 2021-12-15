@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+
 namespace project.Models.EntityFramework
 {
     public class Activity
@@ -18,11 +20,14 @@ namespace project.Models.EntityFramework
         public bool Frozen { get; set; }
         public string? Description { get; set; }
         public string Tag { get; set; }
+
         [Timestamp]
         public byte[] Timestamp { get; set; }
-
+        [JsonIgnore]
         public virtual Project Project { get; set; }
+        [JsonIgnore]
         public virtual Employee Employee { get; set; }
+        [JsonIgnore]
         public virtual Report Report { get; set; }
 
         public class Config : IEntityTypeConfiguration<Activity>

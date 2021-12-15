@@ -7,10 +7,23 @@ using project.Models.EntityFramework;
 
 namespace project.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class ActivityController : BaseController
     {
         public ActivityController(TRSDbContext database ) : base(database) { }
+        
+        [HttpGet]
+        public ActionResult<List<Activity>> All()
+        {
+            int employeeId = sessionToEmployeeId();
+            string data = HttpContext.Session.GetString(surnameSessionKey);
+            ViewData["userInfo"] = data;
 
+
+            return Ok(_database.Activity.ToArray());
+        }
+        /*
         public IActionResult Index(int id = 0)
         {   
             int employeeId = sessionToEmployeeId();
@@ -156,5 +169,6 @@ namespace project.Controllers
 
             return RedirectToAction("Index");   
         }
+        */
     }
 }
