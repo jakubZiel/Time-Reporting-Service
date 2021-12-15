@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,10 +13,13 @@ namespace project.Models.EntityFramework
         public int ID {get; set;}
         public string Name {get; set; }
         public string Surname {get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Activity> Activities { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Report> Reports { get; set; }
+        [JsonIgnore]
         public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; }
     }
 

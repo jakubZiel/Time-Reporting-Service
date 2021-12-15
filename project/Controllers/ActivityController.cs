@@ -16,12 +16,20 @@ namespace project.Controllers
         [HttpGet]
         public ActionResult<List<Activity>> All()
         {
-            int employeeId = sessionToEmployeeId();
+            var user = this.User.Claims;
             string data = HttpContext.Session.GetString(surnameSessionKey);
             ViewData["userInfo"] = data;
 
 
             return Ok(_database.Activity.ToArray());
+        }
+
+        [HttpGet]
+        public ActionResult<List<Activity>> GetActivities(DateTime date, int employeeId)
+        {
+
+
+            return null;
         }
         /*
         public IActionResult Index(int id = 0)
