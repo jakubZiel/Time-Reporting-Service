@@ -7,12 +7,14 @@ using project.Models.EntityFramework;
 
 namespace project.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class ReportController : BaseController
     {   
         private string reportIdSessionKey = "reportMonth";
         
         public ReportController(TRSDbContext database) : base(database) { }
-
+        /*
         public IActionResult Index(int nextMonth = 0)
         {
             ViewData["Title"] = "Affected Projects";
@@ -155,7 +157,7 @@ namespace project.Controllers
             }
             return RedirectToAction("CheckReports");
         }
-
+        */
         private int calculateProjectBudget(int projectId)
         {
             int sum = 0;

@@ -6,108 +6,75 @@ using project.Models.EntityFramework;
 
 namespace project.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class ProjectController : BaseController
     {
         public ProjectController(TRSDbContext database) : base(database) { }
 
+    
+        [HttpGet]
         public IActionResult Index()
         {
-            int employeeId = sessionToEmployeeId();
-            ViewData["employeeId"] = employeeId;
-
-            return View(_database.Project.ToList());
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        public IActionResult InspectView(int id)
-        {
-            ViewData["editable"] = false;
-            Project project = _database.Project.Find(id);
-
-            return View(project);
-        }
-
-        public IActionResult EditView(int id)
-        {
-            ViewData["editable"] = true;
-            Project project = _database.Project.Find(id);
-
-            if (project is null || !project.Active)
-            {
-                return RedirectToAction("Index");
-            }
-            
-            return View("InspectView", project);
-        }
-
-
-        public IActionResult EditViewConc(int id)
-        {
-            Project project = _database.Project.Find(id);
-            ViewData["editable"] = true;
-
-            if (project == null)
-            {
-                ViewData["concurrency"] = "Project has been already deleted";
-                return View("InspectView");
-            }
-  
-            ViewData["concurrency"] = "Project has been already updated, but you can try to update it again.";
-            return View("InspectView", project);
+            return Ok(_database.Project.ToList());
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Project project)
+        public  IActionResult Create(Project project)
         {
-            int employeeId = sessionToEmployeeId();
-                        
-            project.Active = true;            
-            project.OwnerID = employeeId;
-            
+            project.Active = true;
+
             _database.Add(project);
             _database.SaveChanges();
 
-            return RedirectToAction("Index");           
+            return Ok();
         }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Project project, string sub)
+
+
+        [HttpPut]
+        public IActionResult Edit(Project body)
         {
-            Project original = _database.Project.Find(project.ID);
+             Project original = _database.Project.Find(body.ID);
 
             if (original is not null)
             {
 
-                if (!project.Timestamp.SequenceEqual(original.Timestamp))
+                if (!body.Timestamp.SequenceEqual(original.Timestamp))
                 {
-                    return RedirectToAction("EditViewConc", new { id = original.ID });
+                    return NotFound();
                 }
 
-                original.Name = project.Name;
-                original.Active = project.Active;
-                original.Description = project.Description;
-                original.TimeBudget = project.TimeBudget;
-
-
-                if (sub != null)
-                    original.Tags.Add(new Tag() { ProjectID = original.ID, Name = sub}) ;
+                original.Name = body.Name;
+                original.Active = body.Active;
+                original.Description = body.Description;
+                original.TimeBudget = body.TimeBudget;
 
                 _database.Update(original);
                 _database.SaveChanges();
 
-                return RedirectToAction("EditView", new { id = original.ID });
+                return Ok();
             }
             else
             {
-                return RedirectToAction("EditViewConc", new { id = original.ID });
+                return NotFound();
             }
              
+        }
+
+        [HttpPut]
+        [Route("newTag")]
+        public IActionResult AddTag(int projectId, [FromBody] string newTag)
+        {
+            Project project = _database.Project.Find(projectId);
+
+            if (project is null)
+                return NotFound();
+
+            if (project.Tags.Where(tag => tag.Name == newTag).Any())
+                return BadRequest();
+
+            project.Tags.Add(new Tag() { Name=newTag });
+            return Ok();
         }
     }
 }

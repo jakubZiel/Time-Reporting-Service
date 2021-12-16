@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace project.Models.EntityFramework
@@ -13,8 +14,11 @@ namespace project.Models.EntityFramework
         public bool Active {get; set;}
         public string ? Description {get; set;}
         public byte[] Timestamp { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Activity> Activities { get; set; }
+        [JsonIgnore]
         public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; }
+        [JsonIgnore]
         public virtual Employee Owner { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
 

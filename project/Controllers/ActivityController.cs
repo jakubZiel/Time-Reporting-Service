@@ -16,155 +16,79 @@ namespace project.Controllers
         [HttpGet]
         public ActionResult<List<Activity>> All()
         {
-            var user = this.User.Claims;
             string data = HttpContext.Session.GetString(surnameSessionKey);
             ViewData["userInfo"] = data;
-
 
             return Ok(_database.Activity.ToArray());
         }
 
-        [HttpGet]
-        public ActionResult<List<Activity>> GetActivities(DateTime date, int employeeId)
+        public class Body
         {
-
-
-            return null;
-        }
-        /*
-        public IActionResult Index(int id = 0)
-        {   
-            int employeeId = sessionToEmployeeId();
-            
-            string data = HttpContext.Session.GetString(surnameSessionKey);
-            ViewData["userInfo"] = data;
-
-            DateTime requestedDate = DateTime.Parse(HttpContext.Session.GetString("requestedDate"));
-                    
-            if (id != 1 || requestedDate != DateTime.Today.Date){    
-                requestedDate = requestedDate.AddDays(id);
-                HttpContext.Session.SetString("requestedDate", requestedDate.ToString());
-            }
-
-            ViewData["CurrentDate"] = requestedDate;
-            
-            List<Activity> todayActivities = _database.Activity
-                .Where(a => a.EmployeeID == employeeId && requestedDate.Date == a.DateCreated.Date)
-                .ToList();
-
-            return View(todayActivities);
+            public DateTime Date { get; set; }
+            public int Id { get; set; }
         }
 
-        public IActionResult Create(int id)
-        {
-            Project project = _database.Project.Find(id);
-            ViewData["project"] = project;
-
-            return View();
-        }
-        
-        public IActionResult EditView(int id)
-        {    
-            int employeeId = sessionToEmployeeId();       
-
-            Activity activity = _database.Activity.Where(a => a.ID == id).Single<Activity>();
-
-
-            if (activity == null)
-                return NotFound();      
-            
-            Project project = _database.Project.Where(p => p.ID == activity.ProjectID).Single<Project>();
-            
-            ViewData["project"] = project;
-            Console.WriteLine(activity.Timestamp[7]);
-            return View(activity);
-        }
-
-        public IActionResult EditViewConc(int id)
-        {
-            Activity activity = _database.Activity.Find(id);
-
-            if (activity == null)
-            {
-                ViewData["concurrency"] = "Activity has been already deleted";
-                return View("EditView");
-            }
-
-            ViewData["concurrency"] = "Activity has been already updated, but you can try to update it again.";
-            ViewData["project"] = activity.Project;
-            return View("EditView", activity);
-        }
-
-        public IActionResult DeleteView(int id)
-        {
-            int employeeId = sessionToEmployeeId();
-
-            Activity activity = _database.Activity.Find(id);
-            if (activity is null){
-                return NotFound();
-            }
-            
-            return View(activity);
-        }
-
-       
         [HttpPost]
-        [ValidateAntiForgeryToken]   
-        public IActionResult Create(Activity activity)
-        {    
+        [Route("day")]
+        public ActionResult<List<Activity>> GetActivities([FromBody] Body body)
+        {
+            List<Activity> activities = _database.Activity
+                .Where(a => a.EmployeeID == body.Id && body.Date.Date == a.DateCreated.Date)
+                .ToList();
+            return Ok(activities);
+        }
 
-            int employeeId = sessionToEmployeeId();
+        [HttpPost]
+        public IActionResult Create([FromBody] Activity activity)
+        {
             DateTime month = DateTime.Today.Date;
 
-            activity.Frozen = _database.Report.Where(r => r.Month.Date.Month == month.Month && r.Frozen && r.Month.Year == month.Year && r.EmployeeID == employeeId).Any();
+            activity.Frozen = _database.Report.Where(r => r.Month.Date.Month == month.Month && r.Frozen && r.Month.Year == month.Year && r.EmployeeID == activity.EmployeeID).Any();
             activity.DateCreated = DateTime.Now.Date;
-            activity.EmployeeID = employeeId;
 
 
-            if (!_database.Report.Where(r => r.Month.Month == month.Month && r.Month.Year == month.Year && r.EmployeeID == employeeId).Any())
+            if (!_database.Report.Where(r => r.Month.Month == month.Month && r.Month.Year == month.Year && r.EmployeeID == activity.EmployeeID).Any())
             {
-                _database.Report.Add(new Report() { Month = month, Frozen = false, EmployeeID = employeeId });
+                _database.Report.Add(new Report() { Month = month, Frozen = false, EmployeeID = activity.EmployeeID });
                 _database.SaveChanges();
             }
 
-            activity.ReportID = _database.Report.Where(r => r.Month.Month == month.Month && r.Month.Year == month.Year && r.EmployeeID == employeeId).First().ID;
+            activity.ReportID = _database.Report.Where(r => r.Month.Month == month.Month && r.Month.Year == month.Year && r.EmployeeID == activity.EmployeeID).First().ID;
 
             _database.Activity.Add(activity);
+            _database.SaveChanges();
+
+            return Ok(activity);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody]int id)
+        {
+            Activity activity = _database.Activity.Find(id);
+
+            if (activity is null)
+            {
+                return NotFound();             
+            }
+
+            _database.Activity.Remove(activity);
             _database.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]        
-        public IActionResult Delete(int id)
-        {    
-            Activity activity = _database.Activity.Find(id);
-
-            if (activity is null)
-            {
-                ViewData["concurrency"] = "Activity has been already delted";
-                return View("DeleteView", null);
-            }
-            _database.Activity.Remove(activity);
-            _database.SaveChanges();
-
-            return RedirectToAction("Index"); 
-        }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Activity body)
-        { 
+        [HttpPut]
+        public IActionResult Edit([FromBody] Activity body)
+        {
             Activity original = _database.Activity.Find(body.ID);
 
             if (original == null)
             {
-                return RedirectToAction("EditViewConc", new { id = body.ID });
+                return NotFound();
             }
             if (!body.Timestamp.SequenceEqual(original.Timestamp))
             {
-                return RedirectToAction("EditViewConc", new { id = original.ID });
+                return NotFound();
             }
             original.Name = body.Name;
             original.DurationMinutes = body.DurationMinutes;
@@ -173,10 +97,9 @@ namespace project.Controllers
 
             _database.Update(original);
             _database.SaveChanges();
-        
 
-            return RedirectToAction("Index");   
+
+            return Ok(original);
         }
-        */
     }
 }
