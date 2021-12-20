@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace project.Models.EntityFramework
@@ -8,8 +9,11 @@ namespace project.Models.EntityFramework
         public int ID { get; set; }
         public int  ? EmployeeID { get; set; }
         public DateTime Month { get; set; }
+        [JsonIgnore]
         public bool Frozen { get; set; }
+        [JsonIgnore]
         public virtual Employee Employee { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Activity> Reported { get; set; }
     }
 

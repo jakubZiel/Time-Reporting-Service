@@ -37,6 +37,9 @@ C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\jquery\LICENSE.txt
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\appsettings.Development.json
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\appsettings.json
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\frontend\package-lock.json
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\frontend\package.json
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\frontend\public\manifest.json
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\refs\Microsoft.AspNetCore.Antiforgery.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\refs\Microsoft.AspNetCore.Authentication.Abstractions.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\refs\Microsoft.AspNetCore.Authentication.Cookies.dll
@@ -326,6 +329,8 @@ C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\project.pdb
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Castle.Core.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\EntityFramework.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.AspNetCore.Razor.Language.dll
@@ -345,7 +350,12 @@ C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Newtonsoft.Json.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Newtonsoft.Json.Bson.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\System.Configuration.ConfigurationManager.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\System.Runtime.Caching.dll
@@ -388,6 +398,4 @@ C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\project.Views.dll
-C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\project.Views.pdb
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\project.deps.json

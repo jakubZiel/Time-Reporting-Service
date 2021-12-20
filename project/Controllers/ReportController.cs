@@ -14,21 +14,17 @@ namespace project.Controllers
         private string reportIdSessionKey = "reportMonth";
         
         public ReportController(TRSDbContext database) : base(database) { }
-        /*
-        public IActionResult Index(int nextMonth = 0)
+
+        public class EmployeeSummary
         {
-            ViewData["Title"] = "Affected Projects";
-            int employeeId = sessionToEmployeeId();
-            DateTime reportMonth = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
+            public Dictionary<int, int> contributions { get; set; }
+            public DateTime reportMonth { get; set; }
+            public List<Project> projects { get; set; }
+        }
 
-            if (nextMonth != 1 || reportMonth.Date.Year != DateTime.Now.Year || reportMonth.Date.Month != DateTime.Now.Month)
-            {
-                reportMonth = reportMonth.AddMonths(nextMonth);
-                HttpContext.Session.SetString(reportIdSessionKey, reportMonth.ToString());
-            }
-
-            ViewData[reportIdSessionKey] = reportMonth;
-
+        [HttpGet]
+        public IActionResult EmployeeMonthSummary(int employeeId, DateTime reportMonth)
+        {
             List<Project> projects = _database.Project
                 .Where(p => p.Activities.Where(a => a.DateCreated.Year == reportMonth.Year && a.DateCreated.Month == reportMonth.Month && a.EmployeeID == employeeId).Any())
                 .ToList();
@@ -46,98 +42,118 @@ namespace project.Controllers
                 projectContributions.Add(group.Key, group.Sum(a => a.DurationMinutes));
             });
 
-            ViewData["contributions"] = projectContributions;
-                
-            return View(projects);            
+            EmployeeSummary response = new EmployeeSummary()
+            {
+                contributions = projectContributions,
+                projects = projects,
+                reportMonth = reportMonth
+            };
+
+            return Ok(response);
         }
 
-        public IActionResult Inspect(int projectId)
-        {   
-            int employeeId = sessionToEmployeeId();
-            DateTime month = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
-
-            Project project = _database.Project.Find(projectId);
-
+        [HttpGet]
+        [Route("affected_projects")]
+        public IActionResult getEmployeesContributedActivities(int employeeId, int projectId)
+        {
             List<Activity> activities = _database.Activity
                 .Where(a => a.ProjectID == projectId && a.EmployeeID == employeeId)
                 .ToList();
-
-            ViewData["projectId"] = project.Name;
-            ViewData["isProjectActive"] = project.Active;
             
-            return View(activities);
+            return Ok(activities);
         }
 
-        public IActionResult ManageReports()
+        [HttpGet]
+        [Route("owned_projects")]
+        public IActionResult getEmployeesProjects(int employeeId)
         {
-            int employeeId = sessionToEmployeeId();
-            ViewData["Title"] = "Managed Projects";
-            
-            ViewData["reportMonth"] = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
-
-            return View("Index", _database.Project.Where(project => project.OwnerID == employeeId).ToList());
+            List<Project> projects = _database.Project
+                .Where(p => p.OwnerID == employeeId)
+                .ToList();
+            return Ok(projects);
         }
 
-        public IActionResult InspectReports(int projectId)
+        public class ProjectSummary
         {
+            public List<Activity> records { get; set; }
+            public Project project { get; set; }
+            public int usedBudget { get; set; }
+
+        }
+
+        [HttpGet]
+        [Route("project_activities")]
+        public IActionResult getProjectsActivities(int projectId)
+        {
+            Project project = _database.Project.Find(projectId);
+
+            if (project is null)
+                return NotFound();
+
             List<Activity> records = _database.Activity
                 .Where(a => a.ProjectID == projectId)
                 .ToList();
-            
-            List<string> recordKeys = new List<string>();
-            Project project = _database.Project.Find(projectId);
-            
-            ViewData["budget"] = project.TimeBudget;
-            ViewData["usedBudget"] = calculateProjectBudget(projectId);
-            ViewData["recordKeys"] = recordKeys;
-            ViewData["projectId"] = project.Name;
-            ViewData["isProjectActive"] = project.Active;
-            
-            return View("Inspect", records);  
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EditReport(int activityId, int reportId, int newValue)
-        {   
-            Activity activity = _database.Activity.Find(activityId);
-            
-            if (activity is not null)
+            return Ok(new ProjectSummary()
             {
-                activity.AcceptedTime = newValue;
-                _database.Activity.Update(activity);
-                _database.SaveChanges();
-            }
-
-            return RedirectToAction("InspectReports", new {projectId = activity.ProjectID});
+                records = records,
+                project = project,
+                usedBudget = calculateProjectBudget(projectId)
+            });
         }
-    
-        public IActionResult CheckReports()
-        {
-            int employeeId = sessionToEmployeeId();
-            DateTime month = DateTime.Parse(HttpContext.Session.GetString(reportIdSessionKey));
 
+
+        [HttpGet]
+        [Route("reports")]
+        public IActionResult getAllReports(int employeeId)
+        {
             List<Report> reports = _database.Report
                 .Where(r => r.EmployeeID == employeeId)
                 .ToList();
 
-            return View(reports);
+            return Ok(reports);
         }
 
-        public IActionResult InspectMonth(int reportId)
+        [HttpGet]
+        [Route("month_activities")]
+        public IActionResult getMonthActivities(int reportId, int employeeId)
         {
             Report report = _database.Report.Find(reportId);
-            int employeeId = sessionToEmployeeId();
 
-            ViewData["projectId"] = report.Month.ToString("MM/yyyy");
-                
-            return View("Inspect", _database.Activity.Where(a => a.DateCreated.Month == report.Month.Month && a.DateCreated.Year == report.Month.Year && a.EmployeeID == employeeId).ToList());
+            if (report is null)
+                return NotFound();
+
+            List<Activity> activities = _database.Activity
+                .Where(a =>
+                a.DateCreated.Month == report.Month.Month &&
+                a.DateCreated.Year == report.Month.Year &&
+                a.EmployeeID == employeeId)
+                .ToList();
+
+            return Ok(activities);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Freeze(int reportId){
+        [HttpPut]
+        [Route("accept_record")]
+        public IActionResult EditReportRecord(int activityId, int reportId, int newValue) 
+        {
+            Activity activity = _database.Activity.Find(activityId);
+            if (activity is null)
+            {
+                return NotFound();
+            }
 
+            activity.AcceptedTime = newValue;
+            _database.Activity.Update(activity);
+            _database.SaveChanges();
+
+            return Ok(activity);
+        }
+
+        [HttpPut]
+        [Route("freeze")]
+        public IActionResult Freeze(int reportId)
+        {
             Report report = _database.Report.Find(reportId);
 
             if (!report.Frozen)
@@ -155,9 +171,9 @@ namespace project.Controllers
 
                 _database.SaveChanges();
             }
-            return RedirectToAction("CheckReports");
+            return Ok();
         }
-        */
+
         private int calculateProjectBudget(int projectId)
         {
             int sum = 0;

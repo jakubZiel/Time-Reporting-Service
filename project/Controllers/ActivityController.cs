@@ -32,6 +32,8 @@ namespace project.Controllers
         [Route("day")]
         public ActionResult<List<Activity>> GetActivities([FromBody] Body body)
         {
+            if (body is null)
+                return NoContent();
             List<Activity> activities = _database.Activity
                 .Where(a => a.EmployeeID == body.Id && body.Date.Date == a.DateCreated.Date)
                 .ToList();
@@ -62,7 +64,7 @@ namespace project.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete([FromBody]int id)
+        public IActionResult Delete(int id)
         {
             Activity activity = _database.Activity.Find(id);
 
@@ -74,7 +76,7 @@ namespace project.Controllers
             _database.Activity.Remove(activity);
             _database.SaveChanges();
 
-            return RedirectToAction("Index");
+            return Ok();
         }
 
         [HttpPut]
