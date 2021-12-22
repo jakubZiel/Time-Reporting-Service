@@ -53,7 +53,7 @@ namespace project.Controllers
         }
 
         [HttpGet]
-        [Route("affected_projects")]
+        [Route("affected_project")]
         public IActionResult getEmployeesContributedActivities(int employeeId, int projectId)
         {
             List<Activity> activities = _database.Activity
@@ -135,7 +135,7 @@ namespace project.Controllers
 
         [HttpPut]
         [Route("accept_record")]
-        public IActionResult EditReportRecord(int activityId, int reportId, int newValue) 
+        public IActionResult EditReportRecord(int activityId, int newValue) 
         {
             Activity activity = _database.Activity.Find(activityId);
             if (activity is null)
