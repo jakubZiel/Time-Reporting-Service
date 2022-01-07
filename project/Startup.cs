@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using project.Models.EntityFramework;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace project
 {
@@ -34,7 +36,7 @@ namespace project
             services.AddCors(options => options.AddPolicy("TRS-Policy", builder =>
             {
                 builder
-                  .WithOrigins("http://localhost:3000")
+                  .AllowAnyOrigin()
                   .AllowAnyHeader()
                   .AllowAnyMethod();
 
@@ -73,6 +75,13 @@ namespace project
                 });
             }
 
+            app.UseFileServer(new FileServerOptions 
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFile/build")),
+                RequestPath = "/StaticFile/build",
+                EnableDefaultFiles = true
+            });
+ 
             app.UseHttpsRedirection();
 
             app.UseRouting();

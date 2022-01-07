@@ -133,6 +133,21 @@ namespace project.Controllers
             return Ok(activities);
         }
 
+        [HttpGet]
+        [Route("month_activities_project")]
+        public IActionResult getMonthActivities(DateTime month, int employeeId, int projectId)
+        {
+            List<Activity> activities = _database.Activity
+                .Where(a =>
+                a.DateCreated.Month == month.Month &&
+                a.DateCreated.Year == month.Year &&
+                a.ProjectID == projectId &&
+                a.EmployeeID == employeeId)
+                .ToList();
+
+            return Ok(activities);   
+        }
+
         [HttpPut]
         [Route("accept_record")]
         public IActionResult EditReportRecord(int activityId, int newValue) 

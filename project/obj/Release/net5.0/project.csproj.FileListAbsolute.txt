@@ -373,9 +373,6 @@ C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\ref\project.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\project.pdb
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\project.genruntimeconfig.cache
-C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\frontend\package-lock.json
-C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\frontend\package.json
-C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\frontend\public\manifest.json
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Microsoft.OpenApi.dll
@@ -383,3 +380,8 @@ C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\StaticFile\build\asset-manifest.json
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\StaticFile\build\manifest.json
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Microsoft.AspNetCore.NodeServices.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Microsoft.AspNetCore.SpaServices.dll
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\bin\Release\net5.0\Microsoft.AspNetCore.SpaServices.Extensions.dll

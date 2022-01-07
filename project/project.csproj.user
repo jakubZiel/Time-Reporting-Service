@@ -7,4 +7,7 @@
     <ActiveDebugProfile>lab1</ActiveDebugProfile>
     <NameOfLastUsedPublishProfile>C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\Properties\PublishProfiles\NTR-2021 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>
