@@ -78,7 +78,7 @@ namespace project
             app.UseFileServer(new FileServerOptions 
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFile/build")),
-                RequestPath = "/StaticFile/build",
+                RequestPath = "/app",
                 EnableDefaultFiles = true
             });
  
