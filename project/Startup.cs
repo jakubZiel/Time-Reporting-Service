@@ -46,10 +46,6 @@ namespace project
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                  );
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TRS-API", Version = "v1" });
-            });
 
             services.AddDbContext<TRSDbContext>(options =>
             {
@@ -67,17 +63,11 @@ namespace project
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => 
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TRS-API v1");
-                    c.RoutePrefix = string.Empty;
-                });
             }
 
             app.UseFileServer(new FileServerOptions 
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFile/build")),
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "staticfile/build")),
                 RequestPath = "/app",
                 EnableDefaultFiles = true
             });

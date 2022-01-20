@@ -37,8 +37,8 @@ C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\jquery\LICENSE.txt
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\appsettings.Development.json
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\appsettings.json
-C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\StaticFile\build\asset-manifest.json
-C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\StaticFile\build\manifest.json
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\staticfile\build\asset-manifest.json
+C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\staticfile\build\manifest.json
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\refs\Microsoft.AspNetCore.Antiforgery.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\refs\Microsoft.AspNetCore.Authentication.Abstractions.dll
 C:\Users\jakub\OneDrive\Desktop\Programming\.NET\NTR\project\obj\Release\net5.0\PubTmp\Out\refs\Microsoft.AspNetCore.Authentication.Cookies.dll

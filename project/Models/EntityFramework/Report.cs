@@ -9,7 +9,6 @@ namespace project.Models.EntityFramework
         public int ID { get; set; }
         public int  ? EmployeeID { get; set; }
         public DateTime Month { get; set; }
-        [JsonIgnore]
         public bool Frozen { get; set; }
         [JsonIgnore]
         public virtual Employee Employee { get; set; }

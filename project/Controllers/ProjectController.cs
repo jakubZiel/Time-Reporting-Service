@@ -20,7 +20,7 @@ namespace project.Controllers
         }
 
         [HttpPost]
-        public  IActionResult Create(Project project)
+        public  IActionResult Create([FromBody]Project project)
         {
             project.Active = true;
 
