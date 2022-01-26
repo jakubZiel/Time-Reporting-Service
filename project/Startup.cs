@@ -49,7 +49,7 @@ namespace project
 
             services.AddDbContext<TRSDbContext>(options =>
             {
-                string connection = "AzureConnection"; 
+                string connection = "DefaultConnection"; 
                 options.UseSqlServer(Configuration.GetConnectionString(connection));
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString(connection));
             });
